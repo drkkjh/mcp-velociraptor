@@ -51,7 +51,7 @@ wsl -d Ubuntu-22.04
    Verify service in Windows Services Manager
 10. Start server:
     ```bash
-    ./velociraptor-v0.75.1-linux-amd64 --config velociraptor.config.yaml frontend -v
+    ./velociraptor-v0.75.1-rc1-linux-amd64 --config velociraptor.config.yaml frontend -v
     ```
     Server URL: `<IP addr of server>:8889`
 
