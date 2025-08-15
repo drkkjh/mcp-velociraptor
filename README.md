@@ -12,7 +12,9 @@ e.g
 ## Launching in WSL - Ubuntu22.04
 ### 1. Launch WSL with Ubuntu-22.04 in cmd prompt
 
-`wsl -d Ubuntu-22.04`
+```
+wsl -d Ubuntu-22.04
+```
 
 
 
