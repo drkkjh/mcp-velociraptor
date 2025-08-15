@@ -96,7 +96,7 @@ https://docs.velociraptor.app/docs/server_automation/server_api/
 
 Generate an api config file:
 
-`velociraptor --config /etc/velociraptor/server.config.yaml config api_client --name api --role administrator,api api_client.yaml`
+`./velociraptor-v0.75.1-rc1-linux-amd64 --config velociraptor.config.yaml config api_client --name api --role administrator,api api_client.yaml`
 
 ### 2. Clone mcp-velociraptor repo and test API 
 
