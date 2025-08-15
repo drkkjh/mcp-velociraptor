@@ -16,6 +16,40 @@ e.g
 wsl -d Ubuntu-22.04
 ```
 
+## Building Velociraptor Binary from Source with potential plugins [WSL Ubuntu-22.04]
+1. Clone repository:
+   ```bash
+   git clone https://github.com/Velocidex/velociraptor.git
+   ```
+2. Place `<pluginName>.go` in `velociraptor/vql/common`
+3. Navigate to project:
+   ```bash
+   cd velociraptor
+   cd gui/velociraptor
+   ```
+4. Install dependencies:
+   ```bash
+   npm install
+   ```
+5. Ensure GUI is build:
+   ```
+   make build
+   ```
+6. Return to root directory:
+   ```bash
+   cd ../..
+   ```
+7. Build Linux binary:
+   ```bash
+   make linux
+   ```
+8. Find compiled binary in `velociraptor/output` (e.g., `velociraptor-v0.75.1-rc1-linux-amd64`)
+9. Pipe output to ../veloBuild directory
+    ```
+    ./output.sh
+    ```
+---
+
 ## Server and Client Setup (WSL Ubuntu 22.04)
 1. Install Ubuntu-22.04 on WSL
 2. Generate config:
