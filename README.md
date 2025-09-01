@@ -16,6 +16,78 @@ e.g
 wsl -d Ubuntu-22.04
 ```
 
+## Building Velociraptor Binary from Source with potential plugins [WSL Ubuntu-22.04]
+1. Clone repository:
+   ```bash
+   git clone https://github.com/Velocidex/velociraptor.git
+   ```
+2. Place `<pluginName>.go` in `velociraptor/vql/common`
+3. Navigate to project:
+   ```bash
+   cd velociraptor
+   cd gui/velociraptor
+   ```
+4. Install dependencies:
+   ```bash
+   npm install
+   ```
+5. Ensure GUI is build:
+   ```
+   make build
+   ```
+6. Return to root directory:
+   ```bash
+   cd ../..
+   ```
+7. Build Linux binary:
+   ```bash
+   make linux
+   ```
+8. Find compiled binary in `velociraptor/output` (e.g., `velociraptor-v0.75.1-rc1-linux-amd64`)
+9. Pipe output to ../veloBuild directory
+    ```
+    ./output.sh
+    ```
+---
+
+## Server and Client Setup (WSL Ubuntu 22.04)
+1. Install Ubuntu-22.04 on WSL
+2. Generate config:
+   ```bash
+   ./velociraptor-v0.75.1-rc1-linux-amd64 config generate > velociraptor.config.yaml
+   ```
+3. Update server IP in config:
+   ```bash
+   nano velociraptor.config.yaml  # Replace all localhost/127.0.0.1 with server IP
+   ```
+4. Add administrator user:
+   ```bash
+   ./velociraptor-v0.75.1-rc1-linux-amd64 --config velociraptor.config.yaml user add admin --role administrator
+   ```
+   Credentials: `admin`/`123456`
+5. Create client config:
+   ```bash
+   ./velociraptor-v0.75.1-rc1-linux-amd64 --config velociraptor.config.yaml config client > client.config.yaml
+   ```
+6. Download Windows executable:
+   ```bash
+   wget https://github.com/Velocidex/velociraptor/releases/download/v0.74/velociraptor-v0.74.5-windows-amd64.exe
+   ```
+7. Repackage for Windows:
+   ```bash
+   ./velociraptor-v0.75.1-rc1-linux-amd64 config repack --exe velociraptor-v0.74.5-windows-amd64.exe client.config.yaml repackaged_velociraptor.exe
+   ```
+8. Copy `repackaged_velociraptor.exe` to Windows client machine
+9. Install as Windows service (on client machine):
+   ```powershell
+   .\repackaged_velociraptor.exe service install
+   ```
+   Verify service in Windows Services Manager
+10. Start server:
+    ```bash
+    ./velociraptor-v0.75.1-rc1-linux-amd64 --config velociraptor.config.yaml frontend -v
+    ```
+    Server URL: `<IP addr of server>:8889`
 
 
 ## Installation
@@ -24,7 +96,7 @@ https://docs.velociraptor.app/docs/server_automation/server_api/
 
 Generate an api config file:
 
-`velociraptor --config /etc/velociraptor/server.config.yaml config api_client --name api --role administrator,api api_client.yaml`
+`./velociraptor-v0.75.1-rc1-linux-amd64 --config velociraptor.config.yaml config api_client --name api --role administrator,api api_client.yaml`
 
 ### 2. Clone mcp-velociraptor repo and test API 
 
