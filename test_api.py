@@ -26,8 +26,9 @@ Expecting to print out server info() if API working as expected
 
 import yaml, grpc, json
 from pyvelociraptor import api_pb2, api_pb2_grpc
-
-config = yaml.safe_load(open("api_client.yaml"))
+# print('Current working directory:', __file__)
+# Point to the correct path for Velociraptor API client config file
+config = yaml.safe_load(open("C:\\Users\\UserAdmin\\Desktop\\Velociraptor\\veloBuild\\api_client.yaml"))
 
 # Prepare gRPC channel credentials
 creds = grpc.ssl_channel_credentials(

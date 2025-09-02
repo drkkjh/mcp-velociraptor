@@ -124,6 +124,11 @@ The easiest configuration is to run your venv python directly calling mcp_veloci
 
 ![image](https://github.com/user-attachments/assets/3e810f03-ca74-4757-b5dc-89d4e8f8aef6)
 
+#### 3.1 Fixes to enable MCP-Velociraptor to work as intended
+There were some input validation errors. FastMCP builds a Pydantic schema from the type hints in the code in mcp_velociraptor_bridge.py, so when a tool returns a list or dict but the schema says string, we will get the “Input should be a valid string … input_type=list/dict” error.
+
+#### Current fix: Change all relevant return types to List[Dict[str, Any]] in mcp_velociraptor_bridge.py and velociraptor_api.py (works)
+
 
 ### 3. Caveats
 

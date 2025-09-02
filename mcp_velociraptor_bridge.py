@@ -4,12 +4,13 @@ import yaml, grpc, json
 from pyvelociraptor import api_pb2, api_pb2_grpc
 from velociraptor_api import *
 import asyncio
+from typing import Any, Dict, List
 
 
 mcp = FastMCP("velociraptor-mcp")
 
 # add api config path - wrong config and MCP connection will fail
-api_client_config = "/path/to/api_client.yaml"
+api_client_config = "C:\\Users\\UserAdmin\\Desktop\\Velociraptor\\veloBuild\\api_client.yaml"
 init_stub(api_client_config)
 
     
@@ -32,7 +33,7 @@ async def linux_pslist(
     client_id: str,
     ProcessRegex: str = ".",
     Fields: str = "*"
-) -> str:
+) -> List[Dict[str, Any]]:
     """
     List running processes on a Linux host.
 
@@ -58,7 +59,7 @@ async def linux_groups(
     client_id: str,
     GroupFile: str = "/etc/group",
     Fields: str = "*"
-) -> str:
+) -> List[Dict[str, Any]]:
     """
     List groups on a Linux host.
     
@@ -83,7 +84,7 @@ async def linux_groups(
 async def linux_mounts(
     client_id: str,
     Fields: str = "*"
-) -> str:
+) -> List[Dict[str, Any]]:
     """
     List mounts on a Linux host.
     
@@ -113,7 +114,7 @@ async def linux_netstat_enriched(
     CommandLineRegex: str = ".",
     CallChainRegex: str = ".",
     Fields: str = "*"
-) -> str:
+) -> List[Dict[str, Any]]:
     """
     List network connections (netstat) with process metadata on a Linux host.
     
@@ -152,7 +153,7 @@ async def linux_netstat_enriched(
 async def linux_users(
     client_id: str,
     Fields: str = "*"
-) -> str:
+) -> List[Dict[str, Any]]:
     """
     List users on a Linux host.
     
@@ -179,7 +180,7 @@ async def windows_pslist(
     CommandLineRegex: str = ".",
     UsernameRegex: str = ".",
     Fields: str = "Pid, Ppid, TokenIsElevated, Name, Exe, CommandLine, Username, Authenticode.Trusted"
-) -> str:
+) -> List[Dict[str, Any]]:
     """
     List running processes on a Windows host.
 
@@ -217,7 +218,7 @@ async def windows_netstat_enriched(
     CommandLineRegex: str = ".",
     UsernameRegex: str = ".",
     Fields: str = "Pid,Ppid,Name,Path,CommandLine,Username,Authenticode.Trusted,Type,Status,Laddr,Lport,Raddr,Rport"
-) -> str:
+) -> List[Dict[str, Any]]:
     """
     List network connections (netstat) with process metadata on a Windows host.
 
@@ -253,7 +254,7 @@ async def windows_netstat_enriched(
 async def windows_scheduled_tasks(
     client_id: str,
     Fields: str = "OSPath,Mtime,Command,ExpandedCommand,Arguments,ComHandler,UserId,StartBoundary,Authenticode"
-) -> str:
+) -> List[Dict[str, Any]]:
     """
     List scheduled tasks (persistance) with metadata on a Windows host
 
@@ -275,7 +276,7 @@ async def windows_scheduled_tasks(
 async def windows_services(
     client_id: str,
     Fields: str = "UserAccount,Created,ServiceDll,FailureCommand,FailureActions,AbsoluteExePath,HashServiceExe,CertinfoServiceExe,HashServiceDll,CertinfoServiceDll"
-) -> str:
+) -> List[Dict[str, Any]]:
     """
     List services with metadata on a Windows host.
 
@@ -300,7 +301,7 @@ async def windows_services(
 async def windows_recentdocs(
     client_id: str,
     Fields: str = "Username,LastWriteTime,Value,Key,MruEntries,HiveName"
-) -> str:
+) -> List[Dict[str, Any]]:
     """
     Collect RecentDocs from Registry on a Windows host.
 
@@ -322,7 +323,7 @@ async def windows_recentdocs(
 async def windows_shellbags(
     client_id: str,
     Fields: str = "ModTime,Name,_OSPath,Hive,KeyPath,Description,Path,_RawData,_Parsed"
-) -> str:
+) -> List[Dict[str, Any]]:
     """
      Collect Shellbags from Registry on a Windows host.
 
@@ -344,7 +345,7 @@ async def windows_shellbags(
 async def windows_mounted_mass_storage_usb(
     client_id: str,
     Fields: str = "KeyLastWriteTimestamp, KeyName, FriendlyName, HardwareID"
-) -> str:
+) -> List[Dict[str, Any]]:
     """
         Collect evidence of mounted mass storage from Registry on a Windows host.
 
@@ -365,7 +366,7 @@ async def windows_mounted_mass_storage_usb(
 async def windows_evidence_of_download(
     client_id: str,
     Fields: str = "DownloadedFilePath,_ZoneIdentifierContent,FileHash,HostUrl,ReferrerUrl"
-) -> str:
+) -> List[Dict[str, Any]]:
     """
     Collect evidence of download from a Windows host.
 
@@ -386,7 +387,7 @@ async def windows_evidence_of_download(
 async def windows_mountpoints2(
     client_id: str,
     Fields: str = "ModifiedTime, MountPoint, Hive, Key"
-) -> str:
+) -> List[Dict[str, Any]]:
     """
     Collect evidence of download from a Windows host.
 
@@ -410,7 +411,7 @@ async def windows_mountpoints2(
 async def windows_execution_amcache(
     client_id: str,
     Fields: str = "FullPath,SHA1,ProgramID,FileDescription,FileVersion,Publisher,CompileTime,LastModified,LastRunTime"
-) -> str:
+) -> List[Dict[str, Any]]:
     """
     Collect evidence of execution from Amcache on a Windows host.
 
@@ -432,7 +433,7 @@ async def windows_execution_amcache(
 async def windows_execution_bam(
     client_id: str,
     Fields: str = "*"
-) -> str:
+) -> List[Dict[str, Any]]:
     """
     Extract evidence of execution from the BAM (Background Activity Moderator) registry key on a Windows host.
 
@@ -453,7 +454,7 @@ async def windows_execution_bam(
 async def windows_execution_activitiesCache(
     client_id: str,
     Fields: str = "*"
-) -> str:
+) -> List[Dict[str, Any]]:
     """
     Evidence of execution from activitiesCache.db (windows timeline) of system activity on a Windows host.
 
@@ -474,7 +475,7 @@ async def windows_execution_activitiesCache(
 async def windows_execution_userassist(
     client_id: str,
     Fields: str = "Name,User,LastExecution,NumberOfExecutions"
-) -> str:
+) -> List[Dict[str, Any]]:
     """
     Extract evidence of execution from UserAssist registry keys.
 
@@ -495,7 +496,7 @@ async def windows_execution_userassist(
 async def windows_execution_shimcache(
     client_id: str,
     Fields: str = "Position,ModificationTime,Path,ExecutionFlag,ControlSet"
-) -> str:
+) -> List[Dict[str, Any]]:
     """
     Parse ShimCache (AppCompatCache) entries from the registry on a Windows host.
 
@@ -521,7 +522,7 @@ async def windows_execution_prefetch(
     client_id: str,
     Fields: str = "Binary,CreationTime,LastRunTimes,RunCount,Hash" 
     #"Executable,LastRunTimes,RunCount,PrefetchFileName,Version,Hash,CreationTime,ModificationTime,Binary"
-) -> str:
+) -> List[Dict[str, Any]]:
     """
     Parse Prefetch files on a Windows host to identify previously executed programs.
 
@@ -548,7 +549,7 @@ async def windows_ntfs_mft(
     DateAfter: str = "",
     DateBefore: str = "",
     Fields: str = "*"
-) -> str:
+) -> List[Dict[str, Any]]:
     """
     Search MFT for filename or path on a Windows machine. This is a forensic collection and may return many rows. If failure retry with collect_artifact().
     Args:
@@ -617,7 +618,7 @@ async def collect_artifact(
     client_id: str,
     artifact: str,
     parameters: str = ""
-) -> str:
+) -> dict:
     """
     Start a Velociraptor artifact collection and wait for results (up to 10 minutes).
 

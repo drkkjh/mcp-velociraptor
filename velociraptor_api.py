@@ -1,6 +1,7 @@
 import yaml, grpc, json
 from pyvelociraptor import api_pb2, api_pb2_grpc
 from velociraptor_api import *
+from typing import Any, Dict, List
 
 stub = None
 
@@ -52,7 +53,7 @@ def find_client_info(hostname: str) -> dict:
     return result[0]
 
 
-def realtime_collection(client_id: str, artifact: str, parameters: str = "", fields: str = "*", result_scope: str = "") -> str:
+def realtime_collection(client_id: str, artifact: str, parameters: str = "", fields: str = "*", result_scope: str = "") -> List[Dict[str, Any]]:
     vql = (
         f"LET collection <= collect_client(urgent='TRUE',client_id='{client_id}', artifacts='{artifact}', env=dict({parameters})) "
         f"LET get_monitoring = SELECT * FROM watch_monitoring(artifact='System.Flow.Completion') WHERE FlowId = collection.flow_id LIMIT 1 "
@@ -67,7 +68,7 @@ def realtime_collection(client_id: str, artifact: str, parameters: str = "", fie
 
     return results
 
-def start_collection(client_id: str, artifact: str, parameters: str = "" ) -> str:
+def start_collection(client_id: str, artifact: str, parameters: str = "" ) -> Dict[str, Any]:
     vql = (
         f"LET collection <= collect_client(urgent='TRUE',client_id='{client_id}', artifacts='{artifact}', env=dict({parameters})) "
         f" SELECT flow_id,request.artifacts as artifacts,request.specs[0] as specs FROM foreach(row= collection) "
@@ -98,7 +99,7 @@ def get_flow_status(client_id: str, flow_id: str, artifact: str) -> str:
     return "RUNNING"
 
 
-def get_flow_results(client_id: str, flow_id: str, artifact: str, fields: str = "*" ) -> str:
+def get_flow_results(client_id: str, flow_id: str, artifact: str, fields: str = "*" ) -> List[Dict[str, Any]]:
     vql = (
         f"SELECT {fields} FROM source(client_id='{client_id}', flow_id='{flow_id}',artifact='{artifact}') "
     )
