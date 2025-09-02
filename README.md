@@ -14,6 +14,8 @@ e.g
 
 ```
 wsl -d Ubuntu-22.04
+cd Desktop/Velociraptor/veloBuild
+ ./velociraptor-v0.75.1-rc1-linux-amd64 --config velociraptor.config.yaml frontend -v
 ```
 
 ## Building Velociraptor Binary from Source with potential plugins [WSL Ubuntu-22.04]
