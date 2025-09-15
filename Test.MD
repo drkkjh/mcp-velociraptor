@@ -15,6 +15,14 @@ We demonstrate a Windows service binary hijacking(that is benign in nature).
 ### Check if service is spawned (Normal case would not because it is in start=auto, only start when reboot)
 ``` sc qc InfoService ```
 
+## Creating a malicious .dll and running it (Adds user backdoor with admin privileges)
+1. Add this line before backdoor function: `extern "C" __declspec(dllexport)`
+2. Load Visual Studio and compile it (adduser.dll) -> Make sure it is in Release mode and not Debug mode
+3. Navigate to where the .dll is located and launch the .dll using the following cmd: `rundll32.exe .\adduser.dll, backDoor` (Make sure to run w elevated privileges, i.e. Powershell as Administrator)
+
+## Creating a new Group Policy Client Side Extension (CSE) registration -> Persistence / Privilege escalation
+
+
 ## Step 2: Create malicious binary in Kali Linux: 
 ### Create and compile binary: 
 ``` x86_64-w64-mingw32-gcc adduser.c -o adduser.exe ```

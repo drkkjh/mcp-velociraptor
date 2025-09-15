@@ -9,6 +9,14 @@ e.g
 
 `can you tell me which artifacts target the USN journal`
 
+## Note: When IP address of server has changed, have to change the following:
+1. Server config file (velociraptor.config.yaml)
+2. Generate a new client config file
+``` ./velociraptor-v0.75.1-rc1-linux-amd64 --config velociraptor.config.yaml config client > client.config.yaml ```
+3. Repackage the new instance of velociraptor and perform installation on client
+``` ./velociraptor-v0.75.1-rc1-linux-amd64 config repack --exe velociraptor-v0.74.5-windows-amd64.exe client.config.yaml repackaged_velociraptor.exe ```
+4. Modify the server IP address in api_client.yaml (in same folder as velociraptor config files)
+
 ## Launching in WSL - Ubuntu22.04
 ### 1. Launch WSL with Ubuntu-22.04 in cmd prompt
 
@@ -58,7 +66,7 @@ cd Desktop/Velociraptor/veloBuild
    ```bash
    ./velociraptor-v0.75.1-rc1-linux-amd64 config generate > velociraptor.config.yaml
    ```
-3. Update server IP in config:
+3. Update server IP in config(note that IP may change occassionally unless static):
    ```bash
    nano velociraptor.config.yaml  # Replace all localhost/127.0.0.1 with server IP
    ```
